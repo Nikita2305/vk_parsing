@@ -20,19 +20,9 @@ class VkApiAccount(ParsingAccount):
 
     def check(self):
         if (self.vk_session == None):
-            raise RuntimeError("Auth() was not called") 
-        try:
-            self.method("account.getInfo")
-            self.can_single = True
-        except Exception as ex:
-            self.logger.debug(f"{self.login} can_single failed: {str(ex)}")
-            self.can_single = False 
-        try:
-            self.method("execute", {"code": "return [API.account.getInfo()];"})
-            self.can_bucket = True
-        except Exception as ex:
-            self.logger.debug(f"{self.login} can_bucket failed: {str(ex)}")
-            self.can_bucket = False
+            raise RuntimeError("Auth() was not called")
+        self.can_single = True
+        self.can_bucket = True
     
     def error_filter(self, ex):
         try:
